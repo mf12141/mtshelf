@@ -124,7 +124,7 @@ resources:
   - name: hdi_mtshelf_db
     parameters:
       config:
-        schema: MTShelf
+        schema: mtshelf
     properties:
       hdi-container-name: '${service-name}'
     type: com.sap.xs.hdi-container
