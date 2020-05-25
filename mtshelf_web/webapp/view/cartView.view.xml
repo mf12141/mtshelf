@@ -1,0 +1,62 @@
+<mvc:View controllerName="sap.challenge.mtshelf.mtshelf_web.controller.cartView" xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m" xmlns:commons="sap.suite.ui.commons" xmlns:core="sap.ui.core" xmlns:grid="sap.ui.layout.cssgrid">
+	<Page enableScrolling="true" showHeader="false" showFooter="{ path: 'shoppingCartModel>/items', formatter: '.formatter.hasItems' }">
+		<landmarkInfo>
+			<PageAccessibleLandmarkInfo rootRole="Region" rootLabel="{i18n>Cart_rootLabel}" contentRole="Main" contentLabel="{i18n>Cart_contentLabel}"
+				footerRole="Region" footerLabel="{i18n>Cart_footerLabel}" headerRole="Region" headerLabel="{i18n>Cart_headerLabel}"/>
+		</landmarkInfo>
+		<footer>
+			<Toolbar style="Clear" design="Solid" height="4rem">
+				<HBox>
+					<ObjectIdentifier title="Total: "/>
+					<ObjectNumber
+						number="{ path: 'shoppingCartModel>/header/totalCost', type: 'sap.ui.model.type.Float', formatOptions: { minFractionDigits: 2, maxFractionDigits: 2 } }"
+						unit="USD"/>
+				</HBox>
+				<!--<ObjectAttribute title="Total" text="{cartData>/header/totalCost}"/>-->
+				<ToolbarSpacer/>
+				<Button id="proceedButton" text="Checkout" type="Unstyled" class="cartCheckoutButton"
+					enabled="{ path: 'shoppingCartModel>/items', formatter: '.formatter.hasItems' }" visible="{cfg>/notInDelete}" press=".onProceedButtonPress"/>
+			</Toolbar>
+		</footer>
+		<content>
+			<Button width="100%" icon="sap-icon://bar-code" text="Scan Items" visible="{appView>/scanVisible}" type="Accept" press="onScan"/>
+			<List id="entryList" mode="{cfg>/listMode}" delete=".onCartEntriesDelete" selectionChange=".onEntryListSelect"
+				noDataText="{i18n>cartNoData}" items="{ path : 'shoppingCartModel>/items', sorter : { path : 'autoId', descending : true } }">
+				<items>
+					<CustomListItem press=".onEntryListPress" class="sapUiResponsiveMargin" type="{cfg>/listItemType}">
+						<grid:CSSGrid id="grid1" gridAutoFlow="Column" gridTemplateColumns="1fr 3fr 1fr" gridTemplateRows="auto" gridAutoRows="5rem"
+							gridAutoColumns="1fr" gridGap="0.5rem">
+							<grid:items>
+								<HBox>
+									<Image src="{shoppingCartModel>image}" width="4rem" height="4rem" class="sapUiTinyMarginTop"/>
+								</HBox>
+								<VBox justifyContent="Center">
+									<Label text="{shoppingCartModel>description}" wrapping="true"/>
+									<HBox alignItems="Center" justifyContent="Start">
+										<ObjectNumber
+											number="{ path: 'shoppingCartModel>price', type: 'sap.ui.model.type.Float', formatOptions: { minFractionDigits: 2, maxFractionDigits: 2 } }"
+											unit="USD"/>
+										<core:Icon src="sap-icon://sales-notification" color="green" class="sapUiSmallMarginBegin"
+											visible="{ parts: ['shoppingCartModel>upc','promotionList>/promotions'], formatter: '.formatter.hasPromotion' }" size="1em"/>
+										<core:Icon src="sap-icon://blank-tag-2" color="gold" class="sapUiSmallMarginBegin"
+											visible="{ parts: ['shoppingCartModel>weight','shoppingCartModel>size'], formatter: '.formatter.missingTag' }" size="1em"/>
+									</HBox>
+								</VBox>
+								<HBox alignItems="Center" justifyContent="End" visible="{ path: 'shoppingCartModel>price', formatter: '.formatter.isItem' }">
+									<Button icon="sap-icon://sys-minus" class="sapUiSmallMarginEnd cartCustomButtons" type="Transparent" press="onRemoveItem"/>
+									<Text text="{shoppingCartModel>quantity}"/>
+									<Button icon="sap-icon://sys-add" class="sapUiSmallMarginBegin cartCustomButtons" type="Transparent" press="onAddItem"/>
+									<!--<StepInput value="{cartData>quantity}" width="auto" change="onChange"/>-->
+								</HBox>
+							</grid:items>
+						</grid:CSSGrid>
+					</CustomListItem>
+				</items>
+				<swipeContent>
+					<Button text="Delete Item" type="Reject" press=".onCartEntriesDelete"/>
+				</swipeContent>
+			</List>
+		</content>
+	</Page>
+</mvc:View>

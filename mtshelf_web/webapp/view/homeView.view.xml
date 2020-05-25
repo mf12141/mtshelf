@@ -1,0 +1,30 @@
+<mvc:View controllerName="sap.challenge.mtshelf.mtshelf_web.controller.homeView" xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m" xmlns:grid="sap.ui.layout.cssgrid" xmlns:commons="sap.suite.ui.commons">
+	<Page enableScrolling="true" showHeader="false">
+		<content>
+			<Carousel id="PCarousel" height="7rem" width="100%" arrowsPlacement="Content" showPageIndicator="false" loop="true" pages="{promotionList>/promotions}">
+				<pages>
+					<Image src="{promotionList>image}" press="onGetPromotionDetails"/>
+				</pages>
+				<customLayout>
+					<CarouselLayout visiblePagesCount="3"/>
+				</customLayout>
+			</Carousel>
+			<GenericTile class="sapUiSmallMarginBegin sapUiTinyMarginTop" sizeBehavior="Small" press="onAR">
+				<TileContent>
+					<Text text="AR Offers" class="shopTileText"/>
+				</TileContent>
+			</GenericTile>
+			<GenericTile class="sapUiSmallMarginBegin sapUiTinyMarginTop" sizeBehavior="Small" press="onMissingTag">
+				<TileContent>
+					<Text text="Missing Tag Lookup" class="shopTileText"/>
+				</TileContent>
+			</GenericTile>
+			<GenericTile class="sapUiSmallMarginBegin sapUiTinyMarginTop" sizeBehavior="Small" press="onOpenChatBot">
+				<TileContent>
+					<Text text="Shopping Assistant" class="shopTileText"/>
+				</TileContent>
+			</GenericTile>
+		</content>
+	</Page>
+</mvc:View>

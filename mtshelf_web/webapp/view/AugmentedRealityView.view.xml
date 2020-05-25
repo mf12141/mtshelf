@@ -1,0 +1,8 @@
+<mvc:View controllerName="sap.challenge.mtshelf.mtshelf_web.controller.AugmentedRealityView" xmlns:l="sap.ui.layout"
+	xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:html="http://www.w3.org/1999/xhtml">
+	<Page enableScrolling="false" showHeader="false">
+		<content>
+			<html:iframe allow="fullscreen" allowvr="yes" id="arContent" height="100%" width="100%" src="./ar.html"/>
+		</content>
+	</Page>
+</mvc:View>

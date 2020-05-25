@@ -1,0 +1,148 @@
+/* Enter your custom styles here */
+
+
+/* Inital CSS - START*/
+.customHeader {
+    height: 5rem !important;
+    background-color: white !important;
+}
+
+.sapMShellBrandingBar {
+    background-color: white !important;
+}
+
+.customHeader .sapMTBStandard {
+    border-bottom: white !important;
+}
+
+.customFooter .sapMTBStandard {}
+
+.customFooter {
+    height: 4rem;
+    background-color: white !important;
+    border-top: transparent !important;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.footerIconSize {
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-bottom: -0.5rem;
+}
+
+.footerText {
+	color: black !important;
+    text-shadow: 0 0 0 #ffffff !important;
+    font-family: "Helvetica";
+    font-weight: 200 !important;
+}
+
+.footerTextActive {
+	color: #D11833 !important;
+    text-shadow: 0 0 0 #ffffff !important;
+    font-family: "Helvetica";
+}
+
+.customToolbar {
+    background-color: #D11833 !important;
+}
+
+.customToolbarText {
+    font-family: "Helvetica";
+    font-size: 1.25rem;
+    color: white;
+    text-shadow: 0 0 0 #ffffff !important;
+}
+
+.navIcon .sapMBtnIcon {
+    color: white !important;
+}
+
+.mtshelfLogo {
+    height: 4.5rem;
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+/* Inital CSS - END*/
+
+
+
+/*Home CSS - START */
+
+.shopTileText {
+	color: #D11833 !important;
+    text-shadow: 0 0 0 #ffffff !important;
+    font-family: "Futura";
+    font-weight: 400 !important;
+    font-size: 1.25rem;
+    
+    width:100% !important;
+    text-align: center !important;
+}
+
+.sapMGTHdrContent {
+	height: 0rem !important;
+}
+
+.sapMTileCntContent {
+	line-height: 5rem !important;
+}
+
+.sapMCrslHud .sapMCrslPrev {
+	color: #D11833 !important;
+}
+.sapMCrslHud .sapMCrslNext {
+	color: #D11833 !important;
+}
+
+/*Home CSS - END */
+
+/*Cart CSS - START */
+
+.cartCustomButtons .sapMBtnIcon{
+	color: black !important;
+}
+
+.cartCheckoutButton {
+	background-color: #D11833 !important;
+    width: 10rem !important;
+    height: 2.5rem !important;
+    color: white !important;
+    font-size: 1rem !important;
+    font-family: Helvetica !important;
+    font-weight: 200 !important;
+    border-radius: 2rem !important;
+}
+
+/*Cart CSS - END */
+
+/* Page CSS */
+.sapMPage>.sapMPageHeader + .sapMPageSubHeader + section {
+    top: 8rem;
+}
+
+.sapMPageWithFooter>section {
+	bottom: 5rem;
+}
+
+.pageColor {
+	background-color: #E5E5E5 !important;
+}
+
+.sapMTextMaxLine {
+    word-break: break-word;
+}
+
+.rightAlignText {
+	text-align: right;
+}
+
+.arFinder {
+	height: 0px;
+}
+

@@ -1,0 +1,46 @@
+<html>
+   <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <title>mtshelf</title>
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <script src="https://aframe.io/releases/0.9.2/aframe.min.js"></script>
+      <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.7.8/aframe/build/aframe-ar.js"></script>
+      <!--Stylesheets-->
+      <link rel="stylesheet" type="text/css" href="css/style.css">
+      <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+      <script src="https://cdn.socket.io/socket.io-1.4.5.js" type="text/javascript"></script>
+      <script src="./libs/mtshelf_ar.js" type="text/javascript"></script>
+      <script src="./libs/mtshelf_iframe.js" type="text/javascript"></script>
+   </head>
+   <body style="margin : 0px; overflow: hidden;">
+   	<div id="arContainer">
+      <a-scene embedded renderer="precision: mediump" arjs="sourceType: webcam; debugUIEnabled: false">
+        <a-assets>
+          <a-asset-item id="RB-obj" src="./imgs/can.obj"></a-asset-item>
+          <a-asset-item id="RB-mtl" src="./imgs/can.mtl"></a-asset-item>
+          <a-asset-item id="DT-obj" src="./imgs/DeadTree.obj"></a-asset-item>
+          <a-asset-item id="DT-mtl" src="./imgs/DeadTree.mtl"></a-asset-item>
+        </a-assets>
+         <a-marker id="animated-marker-1" type='pattern' url="./imgs/pattern-letterC.patt" markerhandler1 emitevents="true" cursor="rayOrigin: mouse">
+        	<a-entity id="coupon-animated-model-1" look-controls gltf-model="./imgs/PureProtein.glb" scale="0.25 0.25 0.25"></a-entity>
+         </a-marker>
+         <a-marker id="animated-marker-2" type='pattern' url="./imgs/letterA.patt" markerhandler2 emitevents="true" cursor="rayOrigin: mouse">
+            <a-entity id="coupon-animated-model-2" look-controls gltf-model="./imgs/jello.glb" scale="0.25 0.25 0.25"></a-entity>
+         </a-marker>
+         <a-marker preset="kanji" id="animated-marker-3" markerhandler3 emitevents="true" cursor="rayOrigin: mouse">
+           <a-entity id="coupon-animated-model-3" obj-model="obj: #RB-obj; mtl: #RB-mtl" scale="0.1 0.1 0.1"></a-entity>
+         </a-marker>
+         <a-marker id="animated-marker-4" type='pattern' url= "./imgs/pattern-letterB.patt" markerhandler4 emitevents="true" cursor="rayOrigin: mouse">
+           <a-entity id="coupon-animated-model-4" look-controls gltf-model="./imgs/toblerone.glb" position="0 0 0" scale="0.40 0.40 0.40"></a-entity>
+         </a-marker>
+         <a-marker preset="hiro" id="animated-marker-5" markerhandler5 emitevents="true" cursor="rayOrigin: mouse">
+           <a-entity id="coupon-animated-model-5" obj-model="obj: #DT-obj; mtl: #DT-mtl" scale="0.25 0.25 0.25"></a-entity>
+         </a-marker>
+         <a-entity camera>
+         </a-entity>
+      </a-scene>
+      </div>
+   </body>
+</html>

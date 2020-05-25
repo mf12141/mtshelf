@@ -1,0 +1,38 @@
+{
+	"authenticationMethod": "none",
+	"routes": [{
+		"source": "^/xsjs",
+		"destination": "hana2_destination",
+		"csrfProtection": false,
+		"authenticationType": "xsuaa"
+	}, {
+		"source": "^/xsodata",
+		"destination": "hana2_destination",
+		"csrfProtection": false,
+		"authenticationType": "xsuaa"
+	}, {
+		"source": "^/build/v1/dialog",
+		"csrfProtection": false,
+		"authenticationType": "none",
+		"destination": "convAi_destination"
+	}, {
+		"source": "^/oauth",
+		"csrfProtection": false,
+		"destination": "oauth_destination"
+	}, {
+		"source": "^/auth/v1/owners",
+		"csrfProtection": false,
+		"destination": "convAi_UUIDDestination"
+	}, {
+		"source": "^/mtshelf_node",
+		"destination": "node_destination",
+		"csrfProtection": false,
+		"authenticationType": "xsuaa"
+	}, {
+		"source": "^/mtshelf_node_ws",
+		"destination": "ws_destination",
+		"csrfProtection": false,
+		"authenticationType": "xsuaa"
+	}],
+	"welcomeFile": "/cp.portal"
+}

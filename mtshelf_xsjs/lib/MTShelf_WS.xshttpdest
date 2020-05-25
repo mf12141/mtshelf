@@ -1,0 +1,10 @@
+description = "Access Token for WebSocket Services";
+host = "c2ibcderufguuam0r-shoppar-node-ws.cfapps.eu10.hana.ondemand.com";
+port = 443;
+pathPrefix = "";
+useProxy = false;
+proxyHost = "proxy.phl.sap.corp";
+proxyPort = 8080;
+authType = none;
+useSSL = true;
+timeout = 0;

@@ -1,0 +1,89 @@
+<mvc:View controllerName="sap.challenge.mtshelf.mtshelf_associate.controller.Home" xmlns="sap.m" xmlns:core="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc" xmlns:dnd="sap.ui.core.dnd">
+	<Page id="page" backgroundDesign="Solid">
+		<!--<landmarkInfo>-->
+		<!--	<PageAccessibleLandmarkInfo rootRole="Region" rootLabel="{i18n>Home_rootLabel}" subHeaderRole="Search"-->
+		<!--		subHeaderLabel="{i18n>Home_subHeaderLabel}" contentRole="Navigation" contentLabel="{i18n>Home_contentLabel}" headerRole="Region"-->
+		<!--		headerLabel="{i18n>Home_headerLabel}"/>-->
+		<!--</landmarkInfo>-->
+		<headerContent>
+			<!--<Button icon="sap-icon://home" press=".onBack" visible="{appView>/smallScreenMode}"/>-->
+			<FlexBox alignItems="Center" justifyContent="Center" width="100%">
+				<SegmentedButton selectedKey="upc" selectionChange="viewSelected" width="100%">
+					<items>
+						<SegmentedButtonItem text="Scan UPCs" key="upc"/>
+						<SegmentedButtonItem text="Promotions" key="promotions"/>
+					</items>
+				</SegmentedButton>
+			</FlexBox>
+		</headerContent>
+		<subHeader>
+			<Toolbar>
+				<SearchField 
+				    visible="{baseConfigurationModel>/promotionListVisible}"
+					liveChange="onPromotionSearch"
+					width="100%" />
+				<Input id="scannedValue"
+				    placeholder="{= ${device>/barcodeScanEnabled} ? 'Use scan button to enter barcode' : 'Enter barcode manually' }"
+					editable="{= !${device>/barcodeScanEnabled} }" visible="{baseConfigurationModel>/upcListVisible}"/>
+				<Button width="110px" icon="sap-icon://bar-code" text="Scan" tooltip="Scan barcode" visible="{ parts: ['device>/barcodeScanEnabled','baseConfigurationModel>/upcListVisible'], formatter: '.formatter.calcScan' }"
+					press="onScanForValue"></Button>
+				<Button width="110px" icon="sap-icon://bar-code" text="Lookup" tooltip="Lookup barcode" visible="{ parts: ['device>/barcodeScanEnabled','baseConfigurationModel>/upcListVisible'], formatter: '.formatter.calcLookup' }"
+					press="onSubmitForValue"></Button>
+			</Toolbar>
+		</subHeader>
+		<footer>
+			<Toolbar></Toolbar>
+		</footer>
+		<content>
+			<List id="upcList" mode="{= ${device>/system/phone} ? 'None' : 'SingleSelectMaster'}" selectionChange=".onUPCPress" noDataText="{i18n>homeNoData}"
+				busyIndicatorDelay="0" visible="{baseConfigurationModel>/upcListVisible}"
+				items="{ path : 'upcList>/UPCs'}">
+				<contextMenu>
+					<Menu>
+						<items>
+							<MenuItem text="Add to Shopping Cart" enabled="{baseConfigurationModel>/allowSCEdit}"
+								visible="{= ${baseConfigurationModel>/shoppingCart} !== ''}" press="addToShoppingCart"/>
+							<MenuItem text="Cycle Count" press="cycleCount"/>
+							<MenuItem text="Move Product" press="moveProduct"/>
+						</items>
+					</Menu>
+				</contextMenu>
+				<items>
+					<ObjectListItem type="{= ${device>/system/phone} ? 'Active' : 'Inactive'}" icon="{ path: 'upcList>item/image' }" title="{upcList>item/name}"
+						number="{ path : 'upcList>item/msrp', formatter : '.formatter.price' }" numberUnit="USD" press=".onUPCPress" iconDensityAware="false">
+						<attributes>
+							<ObjectAttribute text="{upcList>item/category}"/>
+						</attributes>
+					</ObjectListItem>
+				</items>
+			</List>
+			<List id="promotionList" mode="{= ${device>/system/phone} ? 'None' : 'MultiSelect'}" selectionChange=".onPromotionPress"
+				noDataText="{i18n>homeNoPromotions}" busyIndicatorDelay="0" visible="{baseConfigurationModel>/promotionListVisible}"
+				items="{ path : 'promotionList>/promotions', sorter : { path : 'description', descending : false } }">
+				<items>
+					<ObjectListItem type="{= ${device>/system/phone} ? 'Active' : 'Inactive'}" icon="{ path: 'promotionList>image' }"
+						title="{promotionList>description}" number="{ path : 'promotionList>discount', formatter : '.formatter.price' }" numberUnit="USD"
+						press=".onPromotionPress" iconDensityAware="false">
+						<attributes>
+							<ObjectAttribute text="{promotionList>promotionalDesc}"/>
+						</attributes>
+						<firstStatus>
+							<ObjectStatus text="{ path: 'promotionList>status', formatter: '.formatter.promotionStatus' }"
+								state="{ path: 'promotionList>status', formatter: '.formatter.promotionStatusState' }" inverted="true"/>
+						</firstStatus>
+					</ObjectListItem>
+				</items>
+			</List>
+		</content>
+		<footer>
+			<Toolbar>
+				<ToolbarSpacer/>
+				<Button id="btnActivate" text="Activate" press="promotionActivate" type="Accept" visible="{baseConfigurationModel>/promotionListVisible}"
+					enabled="{baseConfigurationModel>/promotionButtonsEnabled}"/>
+				<Button id="btnDeactivate" text="Deactivate" press="promotionDeactivate" type="Reject"
+					visible="{baseConfigurationModel>/promotionListVisible}" enabled="{baseConfigurationModel>/promotionButtonsEnabled}"/>
+			</Toolbar>
+		</footer>
+	</Page>
+</mvc:View>

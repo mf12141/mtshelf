@@ -1,0 +1,151 @@
+<mvc:View xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core" xmlns:u="sap.ui.unified" xmlns:camera="sap.challenge.mtshelf.mtshelf_associate.control" xmlns="sap.m"
+	xmlns:table="sap.ui.table" controllerName="sap.challenge.mtshelf.mtshelf_associate.controller.MainPanel" displayBlock="true">
+	<NavContainer id="wizardNavContainer">
+		<pages>
+			<Page id="wizardContentPage">
+				<landmarkInfo>
+					<PageAccessibleLandmarkInfo rootRole="Region" rootLabel="{i18n>Welcome_rootLabel}" contentRole="Main"
+						contentLabel="{i18n>Welcome_contentLabel}" headerRole="Region" headerLabel="{i18n>Welcome_headerLabel}"/>
+				</landmarkInfo>
+				<customHeader>
+					<Bar>
+						<contentLeft>
+							<Title text="Associate: {userModel>/name/givenName} {userModel&gt;/name/familyName}"/>
+						</contentLeft>
+						<contentMiddle>
+							<Title text="{i18n>mainTitle}"/>
+						</contentMiddle>
+						<contentRight>
+							<Button icon="sap-icon://refresh" press="refreshPage" tooltip="{i18n>refresh}"/>
+							<Button icon="sap-icon://blank-tag-2" press=".takePhoto" tooltip="{i18n>missingTag}"/>
+							<ToggleButton icon="sap-icon://cart" pressed="{= ${appView>/layout}.startsWith('Three') }" tooltip="{i18n>toCartButtonTooltip}"
+								visible="{= ${device>/barcodeScanEnabled} }" press=".onToggleCart"/>
+							<ToggleButton icon="sap-icon://cart" visible="{= !${device>/barcodeScanEnabled} }" pressed="{= ${appView>/layout}.startsWith('Three') }"
+								tooltip="{i18n>toCartButtonTooltip}" press=".onManualCart"/>
+						</contentRight>
+					</Bar>
+				</customHeader>
+				<content>
+					<!--<l:FixFlex vertical="false">-->
+					<!--	<l:fixContent>-->
+					<!--		<Image src="{ path : 'currentUPC>/item', formatter : '.formatter.selectImage' }" height="300px"-->
+					<!--			visible="{= ${currentUPC>/apiVersion} === '1.0' }"/>-->
+					<!--	</l:fixContent>-->
+					<!--	<l:flexContent>-->
+					<FlexBox height="250px" alignItems="Center" justifyContent="Start" width="100%">
+						<items>
+							<Image src="{ path : 'currentUPC>/item', formatter : '.formatter.selectImage' }" height="225px"
+								visible="{= ${currentUPC>/apiVersion} === '1.0' }"/>
+							<ObjectHeader title="{currentUPC>/item/name}" number="{ path : 'currentUPC>/item/msrp', formatter : '.formatter.price' }" numberUnit="USD"
+								visible="{= ${currentUPC>/apiVersion} === '1.0' }">
+								<statuses>
+									<ObjectStatus text="{ parts: ['currentUPC>/item/upc','promotionList>/promotions','currentUPC>/item/weight','currentUPC>/item/size'], formatter: '.formatter.statusText' }" 
+							              icon="{ parts: ['currentUPC>/item/upc','promotionList>/promotions','currentUPC>/item/weight','currentUPC>/item/size'], formatter: '.formatter.statusIcon' }"
+							              state="{ parts: ['currentUPC>/item/upc','promotionList>/promotions','currentUPC>/item/weight','currentUPC>/item/size'], formatter: '.formatter.statusState' }" />
+								</statuses>
+								<attributes>
+									<ObjectAttribute text="UPC: {currentUPC>/item/upc}"/>
+									<ObjectAttribute visible="{= ${currentUPC>/item/weight} !== '0.00' }"
+										text="{ path : 'currentUPC>/item/weight', formatter : '.formatter.price' } lbs"/>
+									<ObjectAttribute text="{currentUPC>/item/category}"/>
+									<ObjectAttribute text="{currentUPC>/item/shortDescription}"/>
+								</attributes>
+							</ObjectHeader>
+						</items>
+					</FlexBox>
+					<!--	</l:flexContent>-->
+					<!--</l:FixFlex>-->
+					<VBox class="sapUiSmallMargin">
+						<f:Form editable="false" visible="{= ${currentUPC>/apiVersion} === '1.0' }">
+							<f:title>
+								<core:Title text="Inventory"/>
+							</f:title>
+							<f:layout>
+								<f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="4" labelSpanM="6" labelSpanS="6" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0"
+									emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="false"/>
+							</f:layout>
+							<f:formContainers>
+								<f:FormContainer title="">
+									<f:formElements>
+										<f:FormElement label="Quantity in Store">
+											<f:fields>
+												<Text text="{currentUPC>/inventory/quantity}"/>
+											</f:fields>
+										</f:FormElement>
+										<f:FormElement label="Section Name">
+											<f:fields>
+												<Text text="{currentUPC>/inventory/category}"/>
+											</f:fields>
+										</f:FormElement>
+										<f:FormElement label="Aisle">
+											<f:fields>
+												<Text text="{currentUPC>/inventory/aisle}"/>
+											</f:fields>
+										</f:FormElement>
+										<f:FormElement label="Shelf Area">
+											<f:fields>
+												<Text text="{currentUPC>/inventory/area}"/>
+											</f:fields>
+										</f:FormElement>
+									</f:formElements>
+								</f:FormContainer>
+							</f:formContainers>
+						</f:Form>
+					</VBox>
+					<table:Table id="table1" rows="{currentUPC>/item/sizes}"
+						visible="{ path : 'currentUPC>/item/sizes', formatter : '.formatter.sizesVisible' }" selectionMode="Single" ariaLabelledBy="title"
+						visibleRowCount="{ path : 'currentUPC>/item/sizes', formatter : '.formatter.sizeCount' }" rowSelectionChange="onTableSelection">
+						<table:toolbar>
+							<OverflowToolbar design="Solid">
+								<content>
+									<Title id="title" text="Size Options"/>
+									<ToolbarSpacer/>
+									<Button id="updateButton" enabled="false" text="Select Size" tooltip="Update Item Size" press="onUpdateSize"/>
+								</content>
+							</OverflowToolbar>
+						</table:toolbar>
+						<table:columns>
+							<table:Column>
+								<Label text="Size"/>
+								<table:template>
+									<Text text="{currentUPC>size}" wrapping="false"/>
+								</table:template>
+							</table:Column>
+							<table:Column>
+								<Label text="Price"/>
+								<table:template>
+									<Text text="{ path : 'currentUPC>msrp', formatter : '.formatter.price' }" wrapping="false"/>
+								</table:template>
+							</table:Column>
+							<table:Column>
+								<Label text="Weight"/>
+								<table:template>
+									<Text text="{ path : 'currentUPC>weight', formatter : '.formatter.price' } lbs" wrapping="false"/>
+								</table:template>
+							</table:Column>
+							<table:Column>
+								<Label text="UPC"/>
+								<table:template>
+									<Text text="{currentUPC>size_upc}" wrapping="false"/>
+								</table:template>
+							</table:Column>
+						</table:columns>
+					</table:Table>
+				</content>
+				<footer>
+					<Toolbar>
+						<ToolbarSpacer/>
+						<Button id="btnCount" visible="{= ${currentUPC>/apiVersion} === '1.0' }" text="Cycle Count" icon="sap-icon://clinical-tast-tracker"
+							press="onCount"/>
+						<Button id="btnMove" visible="{= ${currentUPC>/apiVersion} === '1.0' }" text="Move Product" icon="sap-icon://action" press="onMove"/>
+						<Button id="btnAdd"
+							visible="{ parts : ['currentUPC>/apiVersion', 'baseConfigurationModel>/shoppingCart'], formatter : '.formatter.addVisible' }"
+							enabled="{baseConfigurationModel>/allowSCEdit}" text="Add To Cart" icon="sap-icon://cart-3" press="onAdd"/>
+						<Button id="btnChat" text="Chat with Bot" icon="sap-icon://discussion" press=".onOpenChatBot"/>
+					</Toolbar>
+				</footer>
+			</Page>
+		</pages>
+	</NavContainer>
+</mvc:View>

@@ -1,0 +1,9 @@
+{
+   "welcomeFile": "resources/index.html",
+   "authenticationMethod": "route",
+   "routes": [{
+       "source": "^(.*)$",
+       "localDir": ".",
+       "authenticationType": "xsuaa"
+     }]
+}

@@ -1,0 +1,18 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core" xmlns:charts="sap.suite.ui.microchart" xmlns:camera="sap.challenge.mtshelf.mtshelf_web.control">
+	<Dialog title="Is this the Missing-Tag Item?" contentWidth="400px" contentHeight="420px" horizontalScrolling="false"
+		verticalScrolling="false" afterClose="onAfterVerifyClosed">
+		<buttons>
+			<Button type="Accept" text="Yes" press="onVerifyImage"/>
+			<Button type="Reject" text="No" press="onRejectImage"/>
+		</buttons>
+		<content>
+			<VBox alignItems="Center" justifyContent="Center">
+				<Label text="Product ID: {detectedImageModel>/item/upc}"/>
+				<Label text="Product Description: {detectedImageModel>/item/name}"/>
+				<!--<Image src="data:image/bmp;base64,{detectedImageModel>/item/image}"></Image>-->
+				<Image src="{detectedImageModel>/item/image}"/>
+			</VBox>
+		</content>
+	</Dialog>
+</core:FragmentDefinition>

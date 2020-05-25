@@ -1,0 +1,9 @@
+host = "s4.sap.corp";
+port = 80;
+useSSL = false;
+pathPrefix = "/";
+useProxy = true;
+proxyHost = "connectivityproxy.internal.cf.eu10.hana.ondemand.com";
+proxyPort = 20003;
+authType = basic;
+timeout = 0;

@@ -1,0 +1,19 @@
+<mvc:View
+        xmlns:html="http://www.w3.org/1999/xhtml"
+	    xmlns="sap.m"
+	    xmlns:mvc="sap.ui.core.mvc"
+	    xmlns:f="sap.f"
+        controllerName="sap.challenge.mtshelf.mtshelf_associate.controller.App"
+        displayBlock="true">
+	<App id="app">
+		<f:FlexibleColumnLayout
+			id="layout"
+			busy="{appView>/busy}"
+			busyIndicatorDelay="{appView>/delay}"
+			layout="{appView>/layout}"
+			backgroundDesign="Translucent"
+			stateChange=".onStateChange">
+		</f:FlexibleColumnLayout>
+	</App>
+</mvc:View>
+

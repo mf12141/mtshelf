@@ -1,0 +1,58 @@
+<mvc:View controllerName="sap.challenge.mtshelf.mtshelf_web.controller.Initial" xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+	xmlns="sap.m" xmlns:html="http://www.w3.org/1999/xhtml">
+	<Shell id="shell" busy="{appView>/busy}" busyIndicatorDelay="{appView>/delay}">
+		<App id="app">
+			<pages>
+				<Page enableScrolling="false" class="pageColor">
+					<customHeader>
+						<Toolbar class="customHeader">
+							<html:section class="center">
+								<Image src="./imgs/mtshelf_Logo.png" class="mtshelfLogo"/>
+							</html:section>
+						</Toolbar>
+					</customHeader>
+					<subHeader>
+						<Bar class="customToolbar">
+							<contentLeft>
+								<!--<Button icon="sap-icon://nav-back" class="navIcon" press="onNavBack" visible="{viewModel>/navButton}"/>-->
+							</contentLeft>
+							<contentMiddle>
+								<Text text="{viewModel>/toolbarText}" class="customToolbarText"/>
+							</contentMiddle>
+							<contentRight>
+							</contentRight>
+						</Bar>
+					</subHeader>
+					<content>
+						<BusyDialog id="BusyDialog" class="busyDialog" customIcon="https://image.ibb.co/jfVoef/logo-color.png" text=" "/>
+						<NavContainer id="parentNavContainer">
+							<pages>
+								<!-- Child views will be added here by the routing mechanism -->
+							</pages>
+						</NavContainer>
+					</content>
+					<footer>
+						<Toolbar class="customFooter">
+							<VBox id="home" alignItems="Center">
+								<Image src="{viewModel>/shopIcon}" press="onShop" class="footerIconSize"/>
+								<Text text="Shop" class="footerText footerTextActive" id="shopText"/>
+							</VBox>
+							<VBox alignItems="Center">
+								<Image src="{viewModel>/accountIcon}" press="onAccount" class="footerIconSize"/>
+								<Text text="Account" class="footerText" id="accountText"/>
+							</VBox>
+							<VBox alignItems="Center">
+								<Image src="{viewModel>/cartIcon}" press="onCart" class="footerIconSize"/>
+								<Text text="Cart" class="footerText" id="cartText"/>
+							</VBox>
+							<VBox alignItems="Center">
+								<Image src="{viewModel>/helpIcon}" press="onHelp" class="footerIconSize"/>
+								<Text text="Help" class="footerText" id="helpText"/>
+							</VBox>
+						</Toolbar>
+					</footer>
+				</Page>
+			</pages>
+		</App>
+	</Shell>
+</mvc:View>

@@ -1,0 +1,21 @@
+<mvc:View controllerName="sap.challenge.mtshelf.mtshelf_web.controller.accountView" xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m" xmlns:commons="sap.suite.ui.commons">
+	<Page enableScrolling="false" showHeader="false">
+		<!--<Toolbar height="50%">-->
+		<!--	<ToolbarSpacer/>-->
+		<!--<Panel id="carouselContainer" class="sapUiSmallMarginBottom">-->
+		<content>
+			<List>
+				<StandardListItem
+					title="Payment Cards"
+					type="Navigation" />
+				<StandardListItem
+					title="Addresses"
+					type="Navigation" />
+				<StandardListItem
+					title="Notification Settings"
+					type="Navigation" />
+			</List>
+		</content>
+	</Page>
+</mvc:View>

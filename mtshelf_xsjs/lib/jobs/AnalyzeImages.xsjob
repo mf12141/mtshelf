@@ -1,0 +1,11 @@
+{
+   "description": "Process Snapshots with ML Object Detection",
+   "action": "xsjs:AnalyzeImages.xsjs::processImages",
+   "schedules": [{
+       "description": "Read open images value every 3 seconds",
+       "xscron": "* * * * * * 0:59/3",
+       "parameter": {
+           "appKey": "None"
+       }
+   }]
+}

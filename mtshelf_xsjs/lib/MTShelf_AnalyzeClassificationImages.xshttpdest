@@ -1,0 +1,10 @@
+description = "Machine Learning 3";
+host = "mlfproduction-image-classifier.cfapps.eu10.hana.ondemand.com";
+port = 443;
+pathPrefix = "/api/v2/image/classification/models/shoppar/versions/5";
+useProxy = false;
+proxyHost = "proxy.phl.sap.corp";
+proxyPort = 8080;
+authType = none;
+useSSL = true;
+timeout = 0;

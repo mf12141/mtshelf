@@ -1,0 +1,228 @@
+{
+	"_version": "1.12.0",
+	"sap.app": {
+		"id": "sap.challenge.mtshelf.mtshelf_web",
+		"type": "application",
+		"i18n": "i18n/i18n.properties",
+		"applicationVersion": {
+			"version": "1.0.0"
+		},
+		"title": "{{appTitle}}",
+		"description": "{{appDescription}}",
+		"sourceTemplate": {
+			"id": "html5moduletemplates.basicSAPUI5ApplicationProjectModule",
+			"version": "1.40.12"
+		},
+		"crossNavigation": {
+			"inbounds": {
+				"intent1": {
+					"signature": {
+						"parameters": {},
+						"additionalParameters": "allowed"
+					},
+					"semanticObject": "mtshelf",
+					"action": "LaunchConsumer",
+					"title": "Consumer",
+					"icon": "sap-icon://customer",
+					"info": " ",
+					"subTitle": " "
+				}
+			}
+		}
+	},
+	"sap.ui": {
+		"technology": "UI5",
+		"icons": {
+			"icon": "",
+			"favIcon": "",
+			"phone": "",
+			"phone@2": "",
+			"tablet": "",
+			"tablet@2": ""
+		},
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": true
+		}
+	},
+	"sap.ui5": {
+		"flexEnabled": false,
+		"rootView": {
+			"viewName": "sap.challenge.mtshelf.mtshelf_web.view.Initial",
+			"type": "XML",
+			"async": true,
+			"id": "Initial"
+		},
+		"dependencies": {
+			"minUI5Version": "1.60.1",
+			"libs": {
+				"sap.ui.core": {},
+				"sap.m": {},
+				"sap.ui.layout": {}
+			}
+		},
+		"contentDensities": {
+			"compact": true,
+			"cozy": true
+		},
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "sap.challenge.mtshelf.mtshelf_web.i18n.i18n"
+				}
+			},
+			"userModel": {
+				"type": "sap.ui.model.json.JSONModel",
+				"uri": ""
+			},
+			"accessTokenModel": {
+				"type": "sap.ui.model.json.JSONModel",
+				"uri": ""
+			},
+			"uuidTokenModel": {
+				"type": "sap.ui.model.json.JSONModel",
+				"uri": ""
+			},
+			"baseConfigurationModel": {
+				"type": "sap.ui.model.json.JSONModel",
+				"uri": ""
+			},
+			"promotionList": {
+				"type": "sap.ui.model.json.JSONModel",
+				"uri": ""
+			},
+			"shoppingCartModel": {
+				"type": "sap.ui.model.json.JSONModel",
+				"uri": ""
+			},
+			"upcList": {
+				"type": "sap.ui.model.json.JSONModel",
+				"uri": ""
+			},
+			"currentUPC": {
+				"type": "sap.ui.model.json.JSONModel",
+				"uri": ""
+			},
+			"customerModel": {
+				"type": "sap.ui.model.json.JSONModel",
+				"uri": ""
+			},
+			"fileUploadModel": {
+				"type": "sap.ui.model.json.JSONModel",
+				"uri": ""
+			},
+			"detectedImageModel": {
+				"type": "sap.ui.model.json.JSONModel",
+				"uri": ""
+			},
+			"salesOrderModel": {
+				"type": "sap.ui.model.json.JSONModel",
+				"uri": ""
+			},
+			"memoryModel": {
+				"type": "sap.ui.model.json.JSONModel",
+				"uri": ""
+			}
+		},
+		"resources": {
+			"css": [{
+				"uri": "css/custom.css"
+			},{
+				"uri": "css/style.css"
+			}, {
+				"uri": "css/quagga.css"
+			}],
+			"js": [{
+				"uri": "libs/quagga.min.js"
+			}, {
+				"uri": "libs/mtshelf_iframe.js"
+			}]
+		},
+		"routing": {
+			"config": {
+				"routerClass": "sap.m.routing.Router",
+				"viewType": "XML",
+				"async": true,
+				"viewPath": "sap.challenge.mtshelf.mtshelf_web.view",
+				"controlAggregation": "pages",
+				"controlId": "app",
+				"clearControlAggregation": false
+			},
+			"routes": [{
+				"pattern": "",
+				"name": "cartView",
+				"target": ["Initial", "homeView", "accountView", "cartView", "helpView", "AugmentedRealityView"]
+			}, {
+				"name": "homeView",
+				"pattern": "homeView",
+				"target": "homeView"
+			}, {
+				"name": "accountView",
+				"pattern": "accountView",
+				"target": "accountView"
+			}, {
+				"name": "cartView",
+				"pattern": "cartView",
+				"target": "cartView"
+			}, {
+				"name": "helpView",
+				"pattern": "helpView",
+				"target": "helpView"
+			}, {
+				"name": "AugmentedRealityView",
+				"pattern": "AugmentedRealityView",
+				"target": "AugmentedRealityView"
+			}],
+			"targets": {
+				"Initial": {
+					"viewType": "XML",
+					"transition": "show",
+					"clearControlAggregation": false,
+					"viewName": "Initial"
+				},
+				"homeView": {
+					"viewType": "XML",
+					"transition": "show",
+					"clearControlAggregation": false,
+					"parent": "Initial",
+					"controlId": "parentNavContainer",
+					"viewName": "homeView"
+				},
+				"accountView": {
+					"viewType": "XML",
+					"transition": "show",
+					"clearControlAggregation": false,
+					"parent": "Initial",
+					"controlId": "parentNavContainer",
+					"viewName": "accountView"
+				},
+				"cartView": {
+					"viewType": "XML",
+					"transition": "show",
+					"clearControlAggregation": false,
+					"parent": "Initial",
+					"controlId": "parentNavContainer",
+					"viewName": "cartView"
+				},
+				"helpView": {
+					"viewType": "XML",
+					"transition": "show",
+					"clearControlAggregation": false,
+					"parent": "Initial",
+					"controlId": "parentNavContainer",
+					"viewName": "helpView"
+				},
+				"AugmentedRealityView": {
+					"viewType": "XML",
+					"transition": "show",
+					"clearControlAggregation": false,
+					"viewName": "AugmentedRealityView",
+					"parent": "Initial",
+					"controlId": "parentNavContainer"
+				}
+			}
+		}
+	}
+}

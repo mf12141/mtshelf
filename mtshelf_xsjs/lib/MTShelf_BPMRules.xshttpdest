@@ -1,0 +1,10 @@
+description = "Cloud Business Rules";
+host = "bpmrulesruntimebpm-i010317trial.hanatrial.ondemand.com";
+port = 443;
+pathPrefix = "/rules-service/rest";
+useProxy = false;
+proxyHost = "proxy.phl.sap.corp";
+proxyPort = 8080;
+authType = basic;
+useSSL = true;
+timeout = 0;

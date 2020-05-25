@@ -1,0 +1,51 @@
+<mvc:View controllerName="sap.challenge.mtshelf.mtshelf_associate.controller.Cart" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc"
+	xmlns:dnd="sap.ui.core.dnd">
+	<Page id="page" title="{cfg>/pageTitle}" backgroundDesign="Solid" showNavButton="{appView>/smallScreenMode}" navButtonPress=".onBack"
+		showFooter="true">
+		<landmarkInfo>
+			<PageAccessibleLandmarkInfo rootRole="Region" rootLabel="{i18n>Cart_rootLabel}" contentRole="Main" contentLabel="{i18n>Cart_contentLabel}"
+				footerRole="Region" footerLabel="{i18n>Cart_footerLabel}" headerRole="Region" headerLabel="{i18n>Cart_headerLabel}"/>
+		</landmarkInfo>
+		<headerContent>
+			<Button id="editButton" icon="sap-icon://edit" enabled="{baseConfigurationModel>/allowSCEdit}" visible="{cfg>/showChange}"
+				press=".onEditOrDoneButtonPress" tooltip="{i18n>cartEditButtonTooltip}"/>
+		</headerContent>
+		<footer>
+			<Toolbar>
+				<Text id="totalPriceText" text="{ path : 'shoppingCartModel>/header/totalCost', formatter : '.formatter.price' } USD"
+					class="sapUiTinyMarginBegin"/>
+				<ToolbarSpacer/>
+				<Text id="totalWeightText" text="{ path : 'shoppingCartModel>/header/totalWeight', formatter : '.formatter.price' } Lbs"
+					class="sapUiTinyMarginBegin"/>
+				<ToolbarSpacer/>
+				<Button id="proceedButton" type="Accept" text="{i18n>cartProceedButtonText}"
+					enabled="{ path: 'shoppingCartModel>/items', formatter: '.formatter.hasItems' }" visible="{cfg>/notInDelete}"
+					press=".onProceedButtonPress"/>
+				<Button id="doneButton" text="{i18n>cartDoneButtonText}" enabled="true" visible="{cfg>/inDelete}" press=".onEditOrDoneButtonPress"/>
+			</Toolbar>
+		</footer>
+		<content>
+			<List id="entryList" footerText="{shoppingCartModel>/header/len} item(s)" mode="{cfg>/listMode}" delete=".onCartEntriesDelete"
+				selectionChange=".onEntryListSelect" noDataText="{i18n>cartNoData}"
+				items="{ path : 'shoppingCartModel>/items', sorter : { path : 'price', descending : false } }">
+				<items>
+					<ObjectListItem intro="{shoppingCartModel>quantity} x" type="{cfg>/listItemType}" icon="{ path : 'shoppingCartModel>image' }"
+						title="{shoppingCartModel>description}" number="{ path : 'shoppingCartModel>price', formatter : '.formatter.price' }" numberUnit="USD"
+						press=".onEntryListPress" iconDensityAware="false">
+						<attributes>
+							<ObjectAttribute text="{ path : 'shoppingCartModel>weight', formatter: '.formatter.weightText' }"/>
+						</attributes>
+						<firstStatus>
+							<ObjectStatus text="{ parts: ['shoppingCartModel>upc','promotionList>/promotions','shoppingCartModel>weight','shoppingCartModel>size'], formatter: '.formatter.statusText' }" 
+							              icon="{ parts: ['shoppingCartModel>upc','promotionList>/promotions','shoppingCartModel>weight','shoppingCartModel>size'], formatter: '.formatter.statusIcon' }"
+							              state="{ parts: ['shoppingCartModel>upc','promotionList>/promotions','shoppingCartModel>weight','shoppingCartModel>size'], formatter: '.formatter.statusState' }" />
+						</firstStatus>
+					</ObjectListItem>
+				</items>
+				<swipeContent>
+					<Button text="Delete Item" type="Reject" press=".onCartEntriesDelete"/>
+				</swipeContent>
+			</List>
+		</content>
+	</Page>
+</mvc:View>

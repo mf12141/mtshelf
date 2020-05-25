@@ -1,0 +1,47 @@
+<core:FragmentDefinition 
+	xmlns="sap.m" 
+	xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core"
+	xmlns:charts="sap.suite.ui.microchart">
+	
+	
+	<Popover id="botPopover" showArrow="true" title="Chat Bot Dialog" placement="Auto" horizontalScrolling="true">
+		
+		<FlexBox class="container" width="300px" height="400px" justifyContent="Center" wrap="Wrap" alignItems="End">
+			
+			<items>
+				
+				<FlexBox width="300px" height="80%" alignItems="End">
+					
+					<ScrollContainer id="scrollBot" height="100%" width="300px" horizontal="false" vertical="true" focusable="true">
+						
+						<List id="list1" width="300px" enableBusyIndicator="false" showSeparators="None">
+							<items>
+								<CustomListItem id="item1" type="Active">
+									<content></content>
+								</CustomListItem>
+							</items>
+						</List>
+					</ScrollContainer>
+				</FlexBox>
+				
+				<FlexBox class="chat_input full" width="100%" height="15%">
+					
+					<items>
+						
+						<Input id="chat" width="300px" placeholder="Your message...">
+							
+						</Input>
+						
+					</items>
+				</FlexBox>
+				
+			</items>
+			
+		</FlexBox>
+		
+	</Popover>
+	
+</core:FragmentDefinition>

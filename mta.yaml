@@ -1,0 +1,212 @@
+ID: mtshelf
+_schema-version: '2.1'
+description: MT Shelf
+parameters:
+  deploy_mode: html5-repo
+version: 0.0.1
+modules:
+  - name: mtshelf-approuter
+    type: approuter.nodejs
+    path: mtshelf-approuter
+    parameters:
+      disk-quota: 256M
+      memory: 256M
+    requires:
+      - name: mtshelf_html5_repo_runtime
+      - name: uaa_mtshelf
+      - name: portal_resources_mtshelf
+      - name: dest_mtshelf
+      - name: MTShelfTheme
+    properties:
+      destinations: '[{"name":"hana2_destination","url":"https://x4rspsm0jw41jfzwppar-mtshelf-xsjs.cfapps.eu10.hana.ondemand.com","forwardAuthToken":true,"strictSSL":false},{"name":"convAi_destination","url":"https://api.recast.ai","strictSSL":false},{"name":"convAi_UUIDDestination","url":"https://api.cai.tools.sap","strictSSL":false},{"name":"oauth_destination","url":"https://innovator-challenge-cf.authentication.eu10.hana.ondemand.com","forwardAuthToken":true,"strictSSL":false},{"name":"node_destination","url":"https://zl3tqkzqrdkvb3s7ppar-mtshelf-node.cfapps.eu10.hana.ondemand.com","forwardAuthToken":true,"strictSSL":false},{"name":"ws_destination","url":"https://c2ibcderufguuam0r-mtshelf-node-ws.cfapps.eu10.hana.ondemand.com","forwardAuthToken":true,"strictSSL":false}]'
+  - name: mtshelf_ui_deployer
+    type: com.sap.html5.application-content
+    path: mtshelf_ui_deployer
+    requires:
+      - name: mtshelf_html5_repo_host
+    build-parameters:
+      requires:
+        - name: mtshelf_web
+          artifacts:
+            - './*'
+          target-path: resources/mtshelf_web
+        - name: mtshelf_associate
+          artifacts:
+            - './*'
+          target-path: resources/mtshelf_associate
+  - name: mtshelf_db
+    type: hdb
+    path: mtshelf_db
+    requires:
+      - name: hdi_mtshelf_db
+  - name: mtshelf_node
+    type: nodejs
+    path: mtshelf_node
+    provides:
+      - name: mtshelf_node_api
+        properties:
+          url: '${default-url}'
+    properties:
+      destinations: '[{"name":"hana2_destination","url":"https://x4rspsm0jw41jfzwppar-mtshelf-xsjs.cfapps.eu10.hana.ondemand.com","forwardAuthToken":true,"strictSSL":false},{"name":"convAi_destination","url":"https://api.recast.ai","strictSSL":false},{"name":"convAi_UUIDDestination","url":"https://api.cai.tools.sap","strictSSL":false},{"name":"oauth_destination","url":"https://innovator-challenge-cf.authentication.eu10.hana.ondemand.com","forwardAuthToken":true,"strictSSL":false},{"name":"node_destination","url":"https://zl3tqkzqrdkvb3s7ppar-mtshelf-node.cfapps.eu10.hana.ondemand.com","forwardAuthToken":true,"strictSSL":false},{"name":"ws_destination","url":"https://c2ibcderufguuam0r-mtshelf-node-ws.cfapps.eu10.hana.ondemand.com","forwardAuthToken":true,"strictSSL":false}]'
+  - name: mtshelf_node_ws
+    type: nodejs
+    path: mtshelf_node_ws
+    provides:
+      - name: mtshelf_node_ws_api
+        properties:
+          url: '${default-url}'
+  - name: mtshelf_web
+    type: html5
+    path: mtshelf_web
+    build-parameters:
+      builder: custom
+      commands:
+        - npm install
+        - npm run build
+      supported-platforms: []
+      build-result: dist
+    requires:
+      - name: uaa_mtshelf
+      - name: dest_mtshelf
+  - name: mtshelf_associate
+    type: html5
+    path: mtshelf_associate
+    build-parameters:
+      builder: custom
+      commands:
+        - npm install
+        - npm run build
+      supported-platforms: []
+      build-result: dist
+    requires:
+      - name: uaa_mtshelf
+      - name: dest_mtshelf
+  - name: mtshelf_xsjs
+    type: nodejs
+    path: mtshelf_xsjs
+    provides:
+      - name: mtshelf_xsjs_api
+        properties:
+          url: '${default-url}'
+    requires:
+      - name: uaa_mtshelf
+      - name: hdi_mtshelf_db
+      - name: mtshelf_db
+      - name: MTShelf_AccessToken
+      - name: MTShelf_AnalyzeClassificationImages
+      - name: MTShelf_APIManagement
+      - name: MTShelf_BPMRules
+      - name: MTShelf_ConnectivityAccessToken
+      - name: MTShelf_S4HANA
+  - name: mtshelf_portal
+    type: com.sap.portal.content
+    path: mtshelf_portal
+    parameters:
+      stack: cflinuxfs3
+      memory: 128M
+      buildpack: 'https://github.com/cloudfoundry/nodejs-buildpack/releases/download/v1.6.39/nodejs-buildpack-cflinuxfs3-v1.6.39.zip'
+    requires:
+      - name: portal_resources_mtshelf
+      - name: uaa_mtshelf
+      - name: mtshelf_html5_repo_host
+      - name: mtshelf_ui_deployer
+resources:
+  - name: mtshelf_html5_repo_runtime
+    parameters:
+      service-plan: app-runtime
+      service: html5-apps-repo
+    type: org.cloudfoundry.managed-service
+  - name: mtshelf_html5_repo_host
+    parameters:
+      service-plan: app-host
+      service: html5-apps-repo
+    type: org.cloudfoundry.managed-service
+  - name: hdi_mtshelf_db
+    parameters:
+      config:
+        schema: MTShelf
+    properties:
+      hdi-container-name: '${service-name}'
+    type: com.sap.xs.hdi-container
+  - name: MTShelf_AccessToken
+    type: org.cloudfoundry.user-provided-service
+    parameters:
+      service-name: MTShelf_AccessToken
+      config:
+        desc: ML Access Token
+        username: 'sb-d09eef29-bfbd-41c0-ac7a-2e6eea959660!b12438|ml-foundation-xsuaa-std!b540'
+        password: RXWpFmDskAD+1oiBneu4wZSD4j8=
+    properties:
+      MTShelf_AccessToken_SERVICE: '${service-name}'
+  - name: MTShelf_AnalyzeClassificationImages
+    type: org.cloudfoundry.user-provided-service
+    parameters:
+      service-name: MTShelf_AnalyzeClassificationImages
+      config:
+        desc: Analyze Classification Images
+        username: 'sb-d09eef29-bfbd-41c0-ac7a-2e6eea959660!b12438|ml-foundation-xsuaa-std!b540'
+        password: RXWpFmDskAD+1oiBneu4wZSD4j8=
+    properties:
+      MTShelf_AnalyzeClassificationImages_SERVICE: '${service-name}'
+  - name: MTShelf_APIManagement
+    type: org.cloudfoundry.user-provided-service
+    parameters:
+      service-name: MTShelf_APIManagement
+      config:
+        desc: API Management
+        username: P2001699784
+        password: '1Shoppar!'
+    properties:
+      MTShelf_APIManagement_SERVICE: '${service-name}'
+  - name: MTShelf_BPMRules
+    type: org.cloudfoundry.user-provided-service
+    parameters:
+      service-name: MTShelf_BPMRules
+      config:
+        desc: Business Rules
+        username: P2001699784
+        password: '1Shoppar!'
+    properties:
+      MTShelf_BPMRules_SERVICE: '${service-name}'
+  - name: MTShelf_ConnectivityAccessToken
+    type: org.cloudfoundry.user-provided-service
+    parameters:
+      service-name: MTShelf_ConnectivityAccessToken
+      config:
+        desc: Connectivity Service Access Token
+        username: 'sb-cloneb4d91bc372f440108962e1479c7155a3!b12438|connectivity!b17'
+        password: dfpetijzJvU5UXrqZhw+ki8/ej0=
+    properties:
+      MTShelf_ConnectivityAccessToken_SERVICE: '${service-name}'
+  - name: MTShelf_S4HANA
+    type: org.cloudfoundry.user-provided-service
+    parameters:
+      service-name: MTShelf_S4HANA
+      config:
+        desc: S/4 HANA System
+        username: InnovatorEX
+        password: IntelligentExperience12345
+    properties:
+      MTShelf_S4HANA_SERVICE: '${service-name}'
+  - name: uaa_mtshelf
+    parameters:
+      path: ./xs-security.json
+      service-plan: application
+      service: xsuaa
+    type: org.cloudfoundry.managed-service
+  - name: dest_mtshelf
+    parameters:
+      service-plan: lite
+      service: destination
+    type: org.cloudfoundry.managed-service
+  - name: MTShelfTheme
+    parameters:
+      service-name: MTShelfTheme
+      service: theming
+      service-plan: standard
+    type: org.cloudfoundry.existing-service
+  - name: portal_resources_mtshelf
+    parameters:
+      service-plan: standard
+      service: portal
+    type: org.cloudfoundry.managed-service
