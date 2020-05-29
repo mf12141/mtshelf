@@ -6,7 +6,7 @@ var xsenv = require("@sap/xsenv");
 var port  = process.env.PORT || 3000;
 
 var options = {
-	anonymous : true, // remove to authenticate calls
+	//anonymous : true, // remove to authenticate calls
 	auditLog : { logToConsole: true }, // change to auditlog service for productive scenarios
 	redirectUrl : "/index.xsjs"
 };
@@ -14,6 +14,13 @@ var options = {
 // configure HANA
 try {
 	options = Object.assign(options, xsenv.getServices({ hana: {tag: "hana"} }));
+} catch (err) {
+	console.log("[WARN]", err.message);
+}
+
+// Add Mail Server - SMTP
+try {
+	options = Object.assign(options, xsenv.getServices({mail: {"name" : "MTShelf_Email"}}));	
 } catch (err) {
 	console.log("[WARN]", err.message);
 }

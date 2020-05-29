@@ -16,7 +16,6 @@ modules:
       - name: uaa_mtshelf
       - name: portal_resources_mtshelf
       - name: dest_mtshelf
-      - name: MTShelfTheme
     properties:
       destinations: '[{"name":"hana2_destination","url":"https://x4rspsm0jw41jfzwppar-mtshelf-xsjs.cfapps.eu10.hana.ondemand.com","forwardAuthToken":true,"strictSSL":false},{"name":"convAi_destination","url":"https://api.recast.ai","strictSSL":false},{"name":"convAi_UUIDDestination","url":"https://api.cai.tools.sap","strictSSL":false},{"name":"oauth_destination","url":"https://innovator-challenge-cf.authentication.eu10.hana.ondemand.com","forwardAuthToken":true,"strictSSL":false},{"name":"node_destination","url":"https://zl3tqkzqrdkvb3s7ppar-mtshelf-node.cfapps.eu10.hana.ondemand.com","forwardAuthToken":true,"strictSSL":false},{"name":"ws_destination","url":"https://c2ibcderufguuam0r-mtshelf-node-ws.cfapps.eu10.hana.ondemand.com","forwardAuthToken":true,"strictSSL":false}]'
   - name: mtshelf_ui_deployer
@@ -46,6 +45,18 @@ modules:
       - name: mtshelf_node_api
         properties:
           url: '${default-url}'
+    requires:
+      - name: uaa_mtshelf
+      - name: hdi_mtshelf_db
+      - name: mtshelf_db
+      - name: MTShelf_AccessToken
+      - name: MTShelf_AnalyzeClassificationImages
+      - name: MTShelf_APIManagement
+      - name: MTShelf_ConnectivityAccessToken
+      - name: MTShelf_S4HANA
+      - name: dest_mtshelf
+      - name: mtshelf-approuter
+      - name: mtshelf_html5_repo_runtime
     properties:
       destinations: '[{"name":"hana2_destination","url":"https://x4rspsm0jw41jfzwppar-mtshelf-xsjs.cfapps.eu10.hana.ondemand.com","forwardAuthToken":true,"strictSSL":false},{"name":"convAi_destination","url":"https://api.recast.ai","strictSSL":false},{"name":"convAi_UUIDDestination","url":"https://api.cai.tools.sap","strictSSL":false},{"name":"oauth_destination","url":"https://innovator-challenge-cf.authentication.eu10.hana.ondemand.com","forwardAuthToken":true,"strictSSL":false},{"name":"node_destination","url":"https://zl3tqkzqrdkvb3s7ppar-mtshelf-node.cfapps.eu10.hana.ondemand.com","forwardAuthToken":true,"strictSSL":false},{"name":"ws_destination","url":"https://c2ibcderufguuam0r-mtshelf-node-ws.cfapps.eu10.hana.ondemand.com","forwardAuthToken":true,"strictSSL":false}]'
   - name: mtshelf_node_ws
@@ -98,6 +109,9 @@ modules:
       - name: MTShelf_BPMRules
       - name: MTShelf_ConnectivityAccessToken
       - name: MTShelf_S4HANA
+      - name: MTShelf_WS
+      - name: MTShelf_Email
+      - name: MTShelf_Connectivity
   - name: mtshelf_portal
     type: com.sap.portal.content
     path: mtshelf_portal
@@ -120,6 +134,8 @@ resources:
     parameters:
       service-plan: app-host
       service: html5-apps-repo
+      config:
+        sizeLimit: 10
     type: org.cloudfoundry.managed-service
   - name: hdi_mtshelf_db
     parameters:
@@ -188,6 +204,12 @@ resources:
         password: IntelligentExperience12345
     properties:
       MTShelf_S4HANA_SERVICE: '${service-name}'
+  - name: MTShelf_Connectivity
+    parameters:
+      service-name: MT Shelf Connectivity
+      service: connectivity
+      service-plan: lite
+    type: org.cloudfoundry.managed-service
   - name: uaa_mtshelf
     parameters:
       path: ./xs-security.json
@@ -199,12 +221,20 @@ resources:
       service-plan: lite
       service: destination
     type: org.cloudfoundry.managed-service
-  - name: MTShelfTheme
+  - name: MTShelf_WS
+    type: org.cloudfoundry.user-provided-service
     parameters:
-      service-name: MTShelfTheme
-      service: theming
-      service-plan: standard
+      service-name: MTShelf_WS
+      config:
+        desc: Web Socket Services
+        username: none
+        password: none
+    properties:
+      MTShelf_WS_SERVICE: '${service-name}'
+  - name: MTShelf_Email
     type: org.cloudfoundry.existing-service
+    parameters:
+      service-name: MTShelf_Email
   - name: portal_resources_mtshelf
     parameters:
       service-plan: standard
