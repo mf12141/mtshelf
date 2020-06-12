@@ -47,7 +47,7 @@ function getShoppingCartTax(shoppingCart) {
 			itemAmounts.push(shoppingCartFull.items[i].price);
 		}
 	}
-	var dest = $.net.http.readDestination("ShoppAR_BPMRules");
+	var dest = $.net.http.readDestination("MTShelf_BPMRules");
 	var client = new $.net.http.Client();
 	var response = this.getCSRFToken(dest, client);
 	var CSRF = response.headers.get("x-csrf-token");
@@ -78,7 +78,7 @@ function getUPCData(upc, appKey, shoppingCart, action, source) {
 		UPCdata = {};
 		UPCdata.item = {};
 		UPCdata.item.upc = upc;
-		var dest = $.net.http.readDestination("ShoppAR_APIManagement");
+		var dest = $.net.http.readDestination("MTShelf_APIManagement");
 		var client = new $.net.http.Client();
 		var req = new $.net.http.Request($.net.http.GET, "/items");
 		req.contentType = "application/json";
@@ -641,7 +641,7 @@ function generateStorageLocation() {
 
 function chatItemSearch(requestBody) {
 	var searchString = requestBody.conversation.memory.query;
-	var dest = $.net.http.readDestination("ShoppAR_APIManagement");
+	var dest = $.net.http.readDestination("MTShelf_APIManagement");
 	var client = new $.net.http.Client();
 	var req = new $.net.http.Request($.net.http.GET, "/query");
 	req.contentType = "application/json";
@@ -706,7 +706,7 @@ function chatItemSearch(requestBody) {
 }
 
 function getSCBarcode(shoppingCart) {
-	var dest = $.net.http.readDestination("ShoppAR_APIManagement");
+	var dest = $.net.http.readDestination("MTShelf_APIManagement");
 	var client = new $.net.http.Client();
 	var imageLoc = "/barcode/" + shoppingCart + ".jpg"
 	var req = new $.net.http.Request($.net.http.GET, imageLoc);
@@ -741,9 +741,9 @@ function getImageData(upc) {
 }
 
 function triggerSCRefresh(source, shopper, shoppingCart) {
-	var dest = $.net.http.readDestination("ShoppAR_WS");
+	var dest = $.net.http.readDestination("MTShelf_WS");
 	var client = new $.net.http.Client();
-	var req = new $.net.http.Request($.net.http.GET, "/shoppar_node_ws/refreshShoppingCart");
+	var req = new $.net.http.Request($.net.http.GET, "/mtshelf_node_ws/refreshShoppingCart");
 	if (!shopper || shopper === "") {
 		var shoppingCartFull = getLatestShoppingCart("", shoppingCart);
 		shopper = shoppingCartFull.header.appKey;
@@ -768,9 +768,9 @@ function triggerSCRefresh(source, shopper, shoppingCart) {
 }
 
 function triggerPromotionStatusNotify(promotion, status) {
-	var dest = $.net.http.readDestination("ShoppAR_WS");
+	var dest = $.net.http.readDestination("MTShelf_WS");
 	var client = new $.net.http.Client();
-	var req = new $.net.http.Request($.net.http.GET, "/shoppar_node_ws/promotionStatusNotify");
+	var req = new $.net.http.Request($.net.http.GET, "/mtshelf_node_ws/promotionStatusNotify");
 	req.contentType = "application/json";
 	req.headers.set("Accept", "application/json");
 	req.parameters.set("promotion", promotion);
@@ -790,9 +790,9 @@ function triggerPromotionStatusNotify(promotion, status) {
 }
 
 function triggerPaymentFinishedNotify(appKey, shoppingCart) {
-	var dest = $.net.http.readDestination("ShoppAR_WS");
+	var dest = $.net.http.readDestination("MTShelf_WS");
 	var client = new $.net.http.Client();
-	var req = new $.net.http.Request($.net.http.GET, "/shoppar_node_ws/paymentFinishedNotify");
+	var req = new $.net.http.Request($.net.http.GET, "/mtshelf_node_ws/paymentFinishedNotify");
 	req.contentType = "application/json";
 	req.headers.set("Accept", "application/json");
 	req.parameters.set("shoppingCart", shoppingCart);
